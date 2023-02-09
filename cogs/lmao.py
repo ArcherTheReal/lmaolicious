@@ -46,7 +46,6 @@ class Lmao (commands.Cog):
 
 
             #get personal score
-            print(length)
             if (length>1):
                 score = self.lmao.find_one({"_id":int(interaction.user.id)})["count"]
             else:
