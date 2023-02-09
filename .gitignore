@@ -1,12 +1,3 @@
 .env
 test.mongodb
-cogs/__pycache__/bot_status.cpython-310.pyc
-cogs/__pycache__/dev_stuff.cpython-310.pyc
-cogs/__pycache__/help.cpython-310.pyc
-cogs/__pycache__/lmao_reset.cpython-310.pyc
-cogs/__pycache__/lmao.cpython-310.pyc
-cogs/__pycache__/ping.cpython-310.pyc
-cogs/__pycache__/pinnerino.cpython-310.pyc
-cogs/__pycache__/test.cpython-310.pyc
-cogs/__pycache__/viewsnaps.cpython-310.pyc
-cogs/__pycache__/bot_status-test.cpython-310.pyc
+cogs/__pycache__/*
