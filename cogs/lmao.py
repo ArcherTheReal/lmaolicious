@@ -63,7 +63,6 @@ class Lmao (commands.Cog):
             if archive is None:
                 await interaction.response.send_message("Archive cannot be found")
             else:
-                score = archive.find_one({"_id":int(interaction.user.id)})["count"]
 
                 #make embed
                 embed=nextcord.Embed(title=f"#lmao Leaderboard of month {month}, year {year}", description="Top 10 users of given month", color=0x0c56e9)
@@ -72,17 +71,13 @@ class Lmao (commands.Cog):
                 #get data for all #10 people
                 cursor = archive.find().sort("count",pymongo.DESCENDING).limit(10)
 
+                length=0
                 for x in cursor:
+                    length+=1
                     if int(x['_id']) != 0:
                         user = self.bot.get_user(int(x['_id']))
                         if user:
                             embed.add_field(name=user.name+"#"+user.discriminator, value=x["count"], inline=False)
-
-                #add personal score and send embed
-                if score is not None:       
-                    embed.set_footer(text="Your score: "+str(score))
-                else:
-                    embed.set_footer(text="You didn't have a score at the time")
                 await interaction.response.send_message(embed=embed)
 
 
