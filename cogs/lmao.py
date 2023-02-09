@@ -36,16 +36,18 @@ class Lmao (commands.Cog):
 
             #get data for all #10 people
             cursor = self.lmao.find().sort("count",pymongo.DESCENDING).limit(10)
-
+            length=0
             for x in cursor:
                 if int(x['_id']) != 0:
+                    length+=1
                     user = self.bot.get_user(int(x['_id']))
                     if user:
                         embed.add_field(name=user.name+"#"+user.discriminator, value=x["count"], inline=False)
 
 
             #get personal score
-            if (len(list(cursor))>1):
+            print(length)
+            if (length>1):
                 score = self.lmao.find_one({"_id":int(interaction.user.id)})["count"]
             else:
                 score=None
