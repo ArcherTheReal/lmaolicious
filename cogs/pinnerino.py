@@ -9,9 +9,10 @@ from dotenv import load_dotenv
 URL = "https://discordapp.com/api/webhooks/1051582452449169529/C5ImR6R-4anpkTM3Ppighvb7dG7K4Anue2GI47w6qgC2LSOn9-lzuwCHuHTC_yqOJeGj"
 
 PIN_AMOUNT = 4
-GUILD_IDS=[1043568926614880346, 1004897099017637979]
 class Pinnerino(commands.Cog):
-    
+    cluster=pymongo.MongoClient(os.getenv("db"))
+    settings=cluster[os.getenv("main")]["settings"]
+    GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
     def __init__(self, bot):
         self.bot=bot
         self.cluster=pymongo.MongoClient(os.getenv("db"))

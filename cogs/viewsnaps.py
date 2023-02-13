@@ -1,11 +1,14 @@
 import nextcord
 from nextcord.ext import commands
+import pymongo
+import os
 
 class Viewsnaps (commands.Cog):
-    
+    cluster=pymongo.MongoClient(os.getenv("db"))
+    settings=cluster[os.getenv("main")]["settings"]
+    GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
     def __init__(self, bot):
         self.bot=bot
-    GUILD_IDS=[1043568926614880346, 1004897099017637979]
     @nextcord.slash_command(name="calc_viewsnap", guild_ids=GUILD_IDS)
     async def calc_viewsnap(self, interaction : nextcord.Interaction, original_angle_pitch:float, original_angle_yaw:float, new_angle_pitch:float, new_angle_yaw:float):
         angleA=[original_angle_pitch, original_angle_yaw]

@@ -5,7 +5,9 @@ import os
 from dotenv import load_dotenv
 
 class Dev_stuff (commands.Cog):
-    
+    cluster=pymongo.MongoClient(os.getenv("db"))
+    settings=cluster[os.getenv("main")]["settings"]
+    GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
     def __init__(self, bot):
         self.bot=bot
         self.cluster=pymongo.MongoClient(os.getenv("db"))
@@ -17,7 +19,6 @@ class Dev_stuff (commands.Cog):
         self.LMAO_ROLE_ID=settings.find_one({"_id":"lmao"})["LMAO_ROLE_ID"]
         self.LMAO_CHANNEL_ID=settings.find_one({"_id":"lmao"})["LMAO_CHANNEL_ID"]
 
-    GUILD_IDS=[1043568926614880346, 1004897099017637979]
     @nextcord.slash_command(name="speak", guild_ids=GUILD_IDS)
     async def ping(self, interaction : nextcord.Interaction, message:str):
         if interaction.user.id in self.DEVS_ID:

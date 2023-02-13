@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 
 class Lmao (commands.Cog):
     
-    
+    cluster=pymongo.MongoClient(os.getenv("db"))
+    settings=cluster[os.getenv("main")]["settings"]
+    GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
     def __init__(self, bot):
         self.bot=bot
         self.cluster=pymongo.MongoClient(os.getenv("db"))
@@ -22,7 +24,6 @@ class Lmao (commands.Cog):
         self.LOCKED=False
     #------- STUFF --------
 
-    GUILD_IDS=[1043568926614880346, 1004897099017637979]
 
     #embed for lmao board
     @nextcord.slash_command(name="lmaoboard", description="Displays the top 10 LMAOers", guild_ids=GUILD_IDS)

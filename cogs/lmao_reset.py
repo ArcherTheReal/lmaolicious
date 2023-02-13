@@ -9,7 +9,9 @@ from dotenv import load_dotenv
 
 
 class Lmao_reset (commands.Cog):
-
+    cluster=pymongo.MongoClient(os.getenv("db"))
+    settings=cluster[os.getenv("main")]["settings"]
+    GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
     def __init__(self, bot:nextcord.Client):
         self.bot=bot
         self.doLoop = True
@@ -25,8 +27,8 @@ class Lmao_reset (commands.Cog):
         self.currentTask=0
         self.LAST_LMAO_ROLE_ID=self.settings.find_one({"_id":"lmao"})["LAST_LMAO_ROLE_ID"]
         self.OLD_LAST_MONTH_ID=self.settings.find_one({"_id":"lmao"})["OLD_LAST_MONTH_ID"]
+        self.GUILD_IDS=self.settings.find_one({"_id":"main"})["GUILD_IDS"]
 
-    GUILD_IDS=[1043568926614880346, 1004897099017637979]
 
     
     @nextcord.slash_command(name="lmao_monthly_reset_start",guild_ids=GUILD_IDS)
@@ -87,7 +89,7 @@ class Lmao_reset (commands.Cog):
             await channel.send(embed=embed)
 
             #update roles
-            guild=self.bot.get_guild(1043568926614880346)
+            guild=self.bot.get_guild(self.GUILD_IDS[0])
             winner_dc=guild.get_member(winner["dc_id"])
             role=guild.get_role(self.LMAO_ROLE_ID)
             role2=guild.get_role(self.LAST_LMAO_ROLE_ID)
@@ -143,7 +145,7 @@ class Lmao_reset (commands.Cog):
             #add personal score and send embed
 
             #update roles
-            guild=self.bot.get_guild(1043568926614880346)
+            guild=self.bot.get_guild(self.GUILD_IDS[0])
             winner_dc=guild.get_member(winner["dc_id"])
             role=guild.get_role(self.LMAO_ROLE_ID)
             role2=guild.get_role(self.LAST_LMAO_ROLE_ID)
