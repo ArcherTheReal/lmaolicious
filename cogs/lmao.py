@@ -127,7 +127,7 @@ class Lmao (commands.Cog):
 
     #listener to receive lmao messages
     @commands.Cog.listener()
-    async def on_message(self, ctx):
+    async def on_message(self, ctx : nextcord.Message):
         #check if message in #lmao and message startswith "lmao"demo
         if self.LOCKED==False and int(ctx.channel.id)==self.LMAO_CHANNEL_ID and str(ctx.content).lower().startswith("lmao"):
             #get person
@@ -138,6 +138,7 @@ class Lmao (commands.Cog):
                 self.lmao.update_one(
                     { "_id": int(ctx.author.id) },
                     { "$inc": {"count":1} })
+                await ctx.add_reaction("✅")
                 #get stuff to see if new record
                 result=self.lmao.find_one({"_id":int(ctx.author.id)})
                 maxed=self.lmao.find_one({"_id":0})
