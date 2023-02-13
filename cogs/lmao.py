@@ -33,7 +33,7 @@ class Lmao (commands.Cog):
 
             #make embed
             embed=nextcord.Embed(title="#lmao Leaderboard", description="Top 10 users", color=0x0c56e9)
-            embed.set_thumbnail(url="https://cdn.nextcordapp.com/emojis/1036401410562076692.webp?size=56&quality=lossless")
+            embed.set_thumbnail(url="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_128,h_126/https://getonstream.com/wp-content/uploads/2021/06/0cd.png")
 
             #get data for all #10 people
             cursor = self.lmao.find().sort("count",pymongo.DESCENDING).limit(10)
@@ -67,7 +67,7 @@ class Lmao (commands.Cog):
 
                 #make embed
                 embed=nextcord.Embed(title=f"#lmao Leaderboard of month {month}, year {year}", description="Top 10 users of given month", color=0x0c56e9)
-                embed.set_thumbnail(url="https://cdn.nextcordapp.com/emojis/1036401410562076692.webp?size=56&quality=lossless")
+                embed.set_thumbnail(url="https://sp-ao.shortpixel.ai/client/to_webp,q_glossy,ret_img,w_128,h_126/https://getonstream.com/wp-content/uploads/2021/06/0cd.png")
 
                 #get data for all #10 people
                 cursor = archive.find().sort("count",pymongo.DESCENDING).limit(10)
