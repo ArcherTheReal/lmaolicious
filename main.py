@@ -12,7 +12,6 @@ load_dotenv()
 cluster = pymongo.MongoClient(os.getenv("db"))
 db = cluster[os.getenv("board")]
 lmao=db["lmao_counter"]
-GUILD_IDS=[1043568926614880346, 1004897099017637979]
 
 
 intents=nextcord.Intents.all()
@@ -25,7 +24,7 @@ TOKEN=settings.find_one({"_id": "main"})["TOKEN"]
 DEVS_ID=settings.find_one({"_id": "main"})["DEVS_ID"]
 ADMIN_PERSONS_ID=settings.find_one({"_id": "main"})["ADMIN_PERSONS_ID"]
 LMAO_CHANNEL_ID=settings.find_one({"_id":"lmao"})["LMAO_CHANNEL_ID"]
-
+GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
 @bot.event
 async def on_ready():
     print(f"Logged in as {bot.user}")
