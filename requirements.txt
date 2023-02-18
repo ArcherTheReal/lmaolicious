@@ -1,0 +1,5 @@
+nextcord
+pymongo
+asyncio
+requests
+python-dotenv
