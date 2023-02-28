@@ -129,8 +129,8 @@ class Lmao (commands.Cog):
     #listener to receive lmao messages
     @commands.Cog.listener()
     async def on_message(self, ctx : nextcord.Message):
-        #check if message in #lmao and message startswith "lmao"demo
-        if self.LOCKED==False and int(ctx.channel.id)==self.LMAO_CHANNEL_ID and str(ctx.content).lower().startswith("lmao"):
+        # Check if the message contains lmao
+        if self.LOCKED==False and int(ctx.channel.id)==self.LMAO_CHANNEL_ID and "lmao" in str(ctx.content):
             #get person
             result=self.lmao.find_one({"_id":int(ctx.author.id)})
             #if person exists
