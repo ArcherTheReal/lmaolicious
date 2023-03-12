@@ -11,7 +11,7 @@ class Lmao (commands.Cog):
     cluster=pymongo.MongoClient(os.getenv("db"))
     settings=cluster[os.getenv("main")]["settings"]
     GUILD_IDS=settings.find_one({"_id":"main"})["GUILD_IDS"]
-    def __init__(self, bot):
+    def __init__(self, bot : nextcord.Client):
         self.bot=bot
         self.cluster=pymongo.MongoClient(os.getenv("db"))
         self.settings=self.cluster[os.getenv("main")]["settings"]
@@ -102,10 +102,31 @@ class Lmao (commands.Cog):
                 else:
                     await interaction.response.send_message("Error: number must be non negativ", ephemeral=True)
             else:
-                await interaction.response.send_message("Error: this user does not have an lmao count", ephemeral=True)
+                self.lmao.insert_one({"_id":int(user.id),"count":number});
         else:
             await interaction.response.send_message("Error: you dont have permission to use this command", ephemeral=True)
-    
+    @nextcord.slash_command(name="add_lmao",description="Adds to someones lmao", guild_ids=GUILD_IDS)
+    async def add_lmao(self, interaction : nextcord.Interaction,user : nextcord.Member, number : int):
+        #check if we have permission
+        if (interaction.user.id in self.DEVS_ID or interaction.user.id in self.ADMIN_PERSONS_ID):
+            #find person mentioned
+            cursor=self.lmao.find_one({"_id":user.id})
+            if (cursor!=None):
+                if (True):
+                    if (number%1==0):
+                        #set lmao count
+                        self.lmao.update_one({"_id":user.id},{"$inc":{"count":number}})
+                        name=str(user.name)
+                        num=str(number)
+                        await interaction.response.send_message(f"Added {num} lmao to {name}'s lmao count", ephemeral=True)
+                    else:
+                        await interaction.response.send_message("Error: number must be a whole number", ephemeral=True)
+                else:
+                    await interaction.response.send_message("Error: number must be non negativ", ephemeral=True)
+            else:
+                self.lmao.insert_one({"_id":int(user.id),"count":number});
+        else:
+            await interaction.response.send_message("Error: you dont have permission to use this command", ephemeral=True)
     #command to get lmao count
     @nextcord.slash_command(name="get_lmao",description="Get Someones lmao count", guild_ids=GUILD_IDS)
     async def get_lmao(self,interaction : nextcord.Interaction, user : nextcord.Member):
@@ -161,7 +182,6 @@ class Lmao (commands.Cog):
 
             else:
                 self.lmao.insert_one({"_id":int(ctx.author.id),"count":1})
-
 
 
 async def setup(bot):
