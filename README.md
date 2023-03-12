@@ -1,6 +1,6 @@
 # Lmao bot
 
-#### A simple discord bot specifically designed for BLAZEICN's discord server [Need For Speed & Stuff](https://discord.gg/yqta2ypYYG)
+#### A simple discord bot specifically designed for BLAZEICN's discord server [Friendly Fire ON](https://discord.gg/yqta2ypYYG)
 
 ---
 
